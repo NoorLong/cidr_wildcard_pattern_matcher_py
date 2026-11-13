@@ -39,3 +39,10 @@ such as `010.0.0.1` are rejected rather than silently reinterpreted.
 `match_any` compiles every pattern in the sequence before testing any of them,
 so a single malformed pattern raises `ValueError` even if an earlier pattern
 would have matched.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
